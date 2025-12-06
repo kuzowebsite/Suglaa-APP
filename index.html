@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Super Jackpot - Download Now</title>
+    <title>VIP System - Download</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
@@ -11,311 +11,249 @@
     <style>
         :root {
             --gold: #FFD700;
-            --gold-glow: rgba(255, 215, 0, 0.6);
+            --gold-glow: rgba(255, 215, 0, 0.4);
+            --green-accent: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.4);
             --dark-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.6);
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 230, 118, 0.05) 0%, transparent 20%);
             color: white;
-            overflow: hidden; /* Scroll хийхгүй */
-            height: 100vh;
+            overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        /* Арын эффект: Spotlight */
-        .spotlight {
+        /* --- QR SCANNER ANIMATION --- */
+        .scanner-frame {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            margin-bottom: 2rem;
+        }
+
+        .scanner-frame i {
+            font-size: 80px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .corner {
             position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
-            z-index: -1;
-            animation: pulse-light 5s infinite alternate;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gold);
+        }
+        .tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+        .tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; border-radius: 0 10px 0 0; }
+        .bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
+        .br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+
+        .laser {
+            position: absolute;
+            top: 0; left: 5%; width: 90%; height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold);
+            animation: scan 2s infinite linear;
+            z-index: 10;
         }
 
-        @keyframes pulse-light {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
+        @keyframes scan {
+            0% { top: 10%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 90%; opacity: 0; }
         }
 
-        /* Text Effects */
+        /* --- CARDS --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 30, 30, 0.8);
+        }
+        
+        .card-app { --accent: var(--gold); }
+        .card-app:hover { border-color: var(--gold); box-shadow: 0 10px 40px -10px var(--gold-glow); }
+        
+        .card-sys { --accent: var(--green-accent); }
+        .card-sys:hover { border-color: var(--green-accent); box-shadow: 0 10px 40px -10px var(--green-glow); }
+
+        .icon-box {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 1rem;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 12px 24px; border-radius: 8px;
+            font-family: 'Orbitron', sans-serif; font-weight: bold;
+            font-size: 0.9rem; text-transform: uppercase;
+            transition: all 0.3s ease; width: 100%; margin-top: 1.5rem;
+            background: var(--accent); color: black;
+            text-decoration: none;
+        }
+        .btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+
+        .card-sys .btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+        .card-sys .btn:hover { background: var(--accent); color: black; }
+
         .neon-title {
             font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            text-transform: uppercase; letter-spacing: 2px;
+            background: linear-gradient(to bottom, #fff 40%, #999);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .gold-text {
-            color: var(--gold);
-            text-shadow: 0 0 20px var(--gold-glow), 0 0 40px var(--gold-glow);
-        }
-
-        /* Jackpot Slot Style */
-        .jackpot-container {
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
-            border: 2px solid #333;
-            border-top: 2px solid #555;
-            border-bottom: 2px solid #111;
-            box-shadow: inset 0 0 20px #000, 0 0 30px rgba(255, 215, 0, 0.2);
-            padding: 15px 30px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Гялбаа эффект */
-        .jackpot-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: skewX(-20deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            50% { left: 200%; }
-            100% { left: 200%; }
-        }
-
-        /* The Button - Цөмийн реактор шиг */
-        .download-btn {
-            position: relative;
-            background: transparent;
-            color: var(--gold);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            padding: 20px 40px;
-            border: 2px solid var(--gold);
-            border-radius: 5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px var(--gold-glow), inset 0 0 15px var(--gold-glow);
-            text-shadow: 0 0 10px var(--gold);
-            overflow: hidden;
-        }
-
-        .download-btn:hover {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 50px var(--gold), 0 0 100px var(--gold);
-            text-shadow: none;
-            transform: scale(1.05);
-        }
-
-        .download-btn::after {
-            content: "APK VERSION";
-            position: absolute;
-            bottom: 2px;
-            right: 5px;
-            font-size: 0.5rem;
-            opacity: 0.7;
-        }
-
-        /* Particle Canvas */
-        #gold-rain {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* Rolling Numbers Animation Class */
-        .rolling {
-            animation: roll 0.1s infinite;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
     </style>
 </head>
-<body class="selection:bg-yellow-500 selection:text-black">
+<body>
 
-    <canvas id="gold-rain"></canvas>
-    <div class="spotlight"></div>
+    <canvas id="bg-canvas"></canvas>
 
-    <main class="relative z-10 text-center w-full max-w-2xl px-6 flex flex-col items-center gap-10">
+    <main class="relative z-10 w-full max-w-5xl px-6 py-12 flex flex-col items-center">
         
-        <div class="space-y-2 animate-fade-in-down">
-            <i class="fa-solid fa-crown text-5xl text-yellow-500 mb-4 drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]"></i>
-            <h1 class="text-6xl md:text-8xl font-black neon-title tracking-tighter m-0 p-0 leading-none">
-                SUPER <br> <span class="gold-text">JACKPOT</span>
+        <div class="text-center mb-12 animate-fade-in-down">
+            <h1 class="text-4xl md:text-6xl font-black neon-title mb-2">
+                VIP ACCESS <span style="color: var(--gold); -webkit-text-fill-color: initial;">SYSTEM</span>
             </h1>
-            <p class="text-gray-400 text-sm md:text-lg tracking-[0.3em] uppercase opacity-80">
-                Таны амьдралыг өөрчлөх боломж
+            <p class="text-gray-400 text-sm md:text-base tracking-[0.2em] uppercase">
+                Secure QR Generator & Scanner Suite
             </p>
         </div>
 
-        <div class="w-full">
-            <div class="jackpot-container transform transition hover:scale-105 duration-500">
-                <div class="text-yellow-600 text-[10px] font-bold uppercase tracking-widest mb-1 text-center">Live Jackpot Pool</div>
-                <div class="flex justify-center items-center gap-1 text-4xl md:text-6xl font-black text-white">
-                    <span class="text-yellow-500 mr-2">₮</span>
-                    <span id="digit-1" class="w-8 md:w-12 text-center">0</span>
-                    <span class="text-gray-600">,</span>
-                    <span id="digit-2" class="w-8 md:w-12 text-center">0</span>
-                    <span id="digit-3" class="w-8 md:w-12 text-center">0</span>
-                    <span id="digit-4" class="w-8 md:w-12 text-center">0</span>
-                    <span class="text-gray-600">,</span>
-                    <span id="digit-5" class="w-8 md:w-12 text-center">0</span>
-                    <span id="digit-6" class="w-8 md:w-12 text-center">0</span>
-                    <span id="digit-7" class="w-8 md:w-12 text-center">0</span>
+        <div class="scanner-frame">
+            <div class="corner tl"></div><div class="corner tr"></div>
+            <div class="corner bl"></div><div class="corner br"></div>
+            <div class="laser"></div>
+            <i class="fa-solid fa-qrcode"></i>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+
+            <div class="glass-card card-app flex flex-col items-center text-center">
+                <div class="icon-box"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h2 class="text-2xl font-bold font-orbitron mb-2 text-white">SCANNER APP</h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    VIP QR кодыг уншиж, баталгаажуулах, тасалбар хэвлэх зориулалттай Android аппликейшн.
+                </p>
+                <div class="mt-4 flex items-center gap-2 text-xs text-yellow-500 font-mono bg-black/30 px-3 py-1 rounded-full">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span> v1.0.1 (APK)
                 </div>
+                <a href="https://github.com/kuzowebsite/Suglaa-APP/releases/download/v1.0.1/vip-qr.apk" class="btn">
+                    <i class="fa-brands fa-android text-lg"></i>
+                    <span>ТАТАХ (APK)</span>
+                </a>
+                <span id="stat-app" class="text-[10px] text-gray-500 mt-2 font-mono">Server 1: Online</span>
             </div>
-        </div>
 
-        <div class="w-full flex flex-col items-center gap-4">
-            <a id="download-btn" href="#" class="download-btn w-full md:w-auto min-w-[300px] flex items-center justify-center gap-4 group">
-                <i class="fa-brands fa-android text-2xl group-hover:animate-bounce"></i>
-                <span>ТАТАХ</span>
-            </a>
-            
-            <div class="flex items-center gap-4 text-xs text-gray-500 font-mono">
-                <span class="flex items-center gap-1">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Online
-                </span>
-                <span>|</span>
-                <span id="download-stat">Loading...</span>
+            <div class="glass-card card-sys flex flex-col items-center text-center">
+                <div class="icon-box"><i class="fa-solid fa-fingerprint"></i></div>
+                <h2 class="text-2xl font-bold font-orbitron mb-2 text-white">GENERATOR PRO</h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Нууцлалтай QR код үүсгэх, хэрэглэгчийн мэдээллийг шифрлэх Windows систем.
+                </p>
+                <div class="mt-4 flex items-center gap-2 text-xs text-green-400 font-mono bg-black/30 px-3 py-1 rounded-full">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> v1.02 (EXE)
+                </div>
+                <a href="https://github.com/kuzowebsite/Suglaa-APP/releases/download/v1.02/create_qr_vip.exe" class="btn">
+                    <i class="fa-brands fa-windows text-lg"></i>
+                    <span>СИСТЕМ ТАТАХ (PC)</span>
+                </a>
+                <span id="stat-sys" class="text-[10px] text-gray-500 mt-2 font-mono">Server 1: Online</span>
             </div>
-        </div>
 
+        </div>
     </main>
 
-    <footer class="absolute bottom-4 text-center w-full px-4">
+    <footer class="fixed bottom-4 text-center w-full px-4 pointer-events-none">
         <p class="text-[10px] text-gray-600 uppercase tracking-widest">
-            Зөвхөн 18-аас дээш насныханд зориулав.
+            &copy; 2025 Super Jackpot VIP System.
         </p>
     </footer>
 
     <script>
-        // 1. GitHub API Fetcher
+        // --- Optional: Fetch Download Counts from GitHub ---
         const REPO = "kuzowebsite/Suglaa-APP";
-        const FALLBACK = "https://github.com/kuzowebsite/Suglaa-APP/releases/download/v1.0.1/vip-qr.apk";
 
-        async function init() {
-            const btn = document.getElementById('download-btn');
-            const stat = document.getElementById('download-stat');
-            
-            btn.href = FALLBACK;
-
+        async function updateStats() {
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
-                const data = await res.json();
-                const apk = data.assets.find(a => a.name.endsWith('.apk'));
+                const res = await fetch(`https://api.github.com/repos/${REPO}/releases`);
+                const releases = await res.json();
+                
+                let apkCount = 0;
+                let exeCount = 0;
 
-                if(apk) {
-                    btn.href = apk.browser_download_url;
-                    stat.innerText = `${apk.download_count.toLocaleString()} хүн татсан`;
-                }
+                // Loop through releases to find counts for specific files
+                releases.forEach(release => {
+                    release.assets.forEach(asset => {
+                        if(asset.name === 'vip-qr.apk') apkCount += asset.download_count;
+                        if(asset.name === 'create_qr_vip.exe') exeCount += asset.download_count;
+                    });
+                });
+
+                if(apkCount > 0) document.getElementById('stat-app').innerText = `Total Downloads: ${apkCount}`;
+                if(exeCount > 0) document.getElementById('stat-sys').innerText = `Total Downloads: ${exeCount}`;
+
             } catch(e) {
-                stat.innerText = "15K+ Downloads";
+                console.log("Stats error, keeping default text.");
             }
         }
-        init();
+        updateStats();
 
-        // 2. Slot Machine Number Animation
-        // Target: 15,482,900 (Example)
-        const targetDigits = [1, 5, 4, 8, 2, 9, 0];
-        const digitElements = [
-            document.getElementById('digit-1'),
-            document.getElementById('digit-2'),
-            document.getElementById('digit-3'),
-            document.getElementById('digit-4'),
-            document.getElementById('digit-5'),
-            document.getElementById('digit-6'),
-            document.getElementById('digit-7')
-        ];
-
-        function spinSlots() {
-            digitElements.forEach((el, index) => {
-                let speed = 50 + (index * 20); // Сүүлийн тоонууд удаан эргэнэ
-                let counter = 0;
-                let interval = setInterval(() => {
-                    el.innerText = Math.floor(Math.random() * 10);
-                    counter++;
-                    if (counter > 20 + (index * 5)) { // Stop condition
-                        clearInterval(interval);
-                        el.innerText = targetDigits[index];
-                        el.style.color = index === 6 ? '#fff' : '#fff'; // Final color
-                        
-                        // Last digit glow effect
-                        if(index === 6) {
-                            document.querySelector('.jackpot-container').style.boxShadow = "inset 0 0 20px #000, 0 0 50px rgba(255, 215, 0, 0.5)";
-                        }
-                    }
-                }, speed);
-            });
-        }
-        
-        // Start spinning after a slight delay
-        setTimeout(spinSlots, 500);
-
-        // 3. Golden Rain (Canvas Animation)
-        const canvas = document.getElementById('gold-rain');
+        // --- Background Animation ---
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        
         let w, h;
         const particles = [];
 
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-        }
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
         class Particle {
             constructor() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h - h; // Start above screen
-                this.size = Math.random() * 2 + 1;
-                this.speedY = Math.random() * 3 + 1;
-                this.color = `rgba(255, 215, 0, ${Math.random() * 0.5 + 0.1})`;
+                this.x = Math.random() * w; this.y = Math.random() * h;
+                this.size = Math.random() * 1.5; this.speedY = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 230, 118, 0.3)';
             }
             update() {
-                this.y += this.speedY;
-                if (this.y > h) {
-                    this.y = -10;
-                    this.x = Math.random() * w;
-                }
+                this.y -= this.speedY;
+                if (this.y < 0) { this.y = h; this.x = Math.random() * w; }
             }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.rect(this.x, this.y, this.size, this.size * 2); // Rectangle shapes resemble confetti/gold bars
-                ctx.fill();
-            }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
-
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, w, h);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        function animate() { ctx.clearRect(0, 0, w, h); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
         animate();
-
     </script>
 </body>
-
 </html>
-
-
